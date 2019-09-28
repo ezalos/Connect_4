@@ -6,7 +6,7 @@
 /*   By: ezalos <ezalos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 12:00:51 by ezalos            #+#    #+#             */
-/*   Updated: 2019/09/28 00:36:49 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/28 02:40:32 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	print_board(t_connect *c_four)
 	}
 	if (c_four->print == FAILURE)
 		return ;
-	if (!c_four->turn ? c_four->turn % 2 : !(c_four->turn % 2))
+	if (c_four->turn || c_four->turn == 0 ? c_four->turn % 2 : !(c_four->turn % 2))
 		ft_printf("%~{255;255;0}O");
 	else
 		ft_printf("%~{255;0;0}X");
@@ -53,9 +53,21 @@ void	print_board(t_connect *c_four)
 		if (!CORNER)
 			ft_printf("\n");
 	}
+	if (c_four->end == SUCCESS)
+	{
+		if (CORNER)
+			ft_place_cursor(i + 4, w.ws_col - ((COLS_NB * 2) + 2));
+		if (c_four->winner == PLAYER_ONE)
+			ft_printf("%~{255;0;0} WINNER IS X%~{}\n");
+		else if (c_four->winner == PLAYER_TWO)
+			ft_printf("%~{255;255;0} WINNER IS O%~{}\n");
+		else if (c_four->winner == PLAYER_NONE)
+			ft_printf("%~{150;150;255}  NO WINNER%~{}\n", c_four->winner == PLAYER_ONE ? 'X' : 'O');
+	}
 	if (CORNER)
 	{
-		_C_CURSOR_LOAD;
+		if (c_four->end == FAILURE)
+			_C_CURSOR_LOAD;
 		ft_printf("%~{}");
 	}
 	else

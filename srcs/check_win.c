@@ -6,7 +6,7 @@
 /*   By: ezalos <ezalos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 21:53:18 by ezalos            #+#    #+#             */
-/*   Updated: 2019/09/28 00:27:54 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/28 01:35:22 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		is_horizontal_win(t_connect *c_four, int player, int row, int col)
 		combo++;
 		col_mod++;
 	}
-	if (combo == 3)
+	if (combo >= 3)
 		r_v = SUCCESS;
 	else
 	{
@@ -50,7 +50,7 @@ int		is_horizontal_win(t_connect *c_four, int player, int row, int col)
 			col_mod--;
 		}
 	}
-	if (combo == 3)
+	if (combo >= 3)
 		r_v = SUCCESS;
 	// DEBUG_INT(r_v);
 	return (r_v);
@@ -71,7 +71,7 @@ int		is_vertical_win(t_connect *c_four, int player, int row, int col)
 		combo++;
 		row_mod++;
 	}
-	if (combo == 3)
+	if (combo >= 3)
 		r_v = SUCCESS;
 	else
 	{
@@ -83,7 +83,7 @@ int		is_vertical_win(t_connect *c_four, int player, int row, int col)
 			row_mod--;
 		}
 	}
-	if (combo == 3)
+	if (combo >= 3)
 		r_v = SUCCESS;
 	// DEBUG_INT(r_v);
 	return (r_v);
@@ -107,7 +107,7 @@ int		is_diagonal_pos_win(t_connect *c_four, int player, int row, int col)
 		row_mod++;
 		col_mod++;
 	}
-	if (combo == 3)
+	if (combo >= 3)
 		r_v = SUCCESS;
 	else
 	{
@@ -121,7 +121,7 @@ int		is_diagonal_pos_win(t_connect *c_four, int player, int row, int col)
 			col_mod--;
 		}
 	}
-	if (combo == 3)
+	if (combo >= 3)
 		r_v = SUCCESS;
 		// DEBUG_INT(r_v);
 	return (r_v);
@@ -145,7 +145,7 @@ int		is_diagonal_neg_win(t_connect *c_four, int player, int row, int col)
 		row_mod--;
 		col_mod++;
 	}
-	if (combo == 3)
+	if (combo >= 3)
 		r_v = SUCCESS;
 	else
 	{
@@ -159,7 +159,7 @@ int		is_diagonal_neg_win(t_connect *c_four, int player, int row, int col)
 			col_mod--;
 		}
 	}
-	if (combo == 3)
+	if (combo >= 3)
 		r_v = SUCCESS;
 		// DEBUG_INT(r_v);
 	return (r_v);

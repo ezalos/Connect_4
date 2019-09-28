@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/28 01:16:33 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/28 02:45:13 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@
 # define COMPUTER				0
 # define HUMAN					1
 
-# define CORNER					0
+# define CORNER					1
 
 # define FAILURE				0
 # define SUCCESS				1
+
+# define FALSE					0
+# define TRUE					1
 
 # define UNSET					-1
 # define ERROR					-1
@@ -36,40 +39,55 @@
 
 # define PTR_ERROR				NULL
 
-# define REFRESH_TIME			1 //0.X seconds
-# define CHEAT					5 //grow size
 # define PLAYER_TURN(c_four)	c_four->turn % 2 ? PLAYER_TWO : PLAYER_ONE
 # define PILE_HEIGHT(c_four, move)	c_four->pile_size[move]
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <termios.h>
+# define C_EXPLO         		2.41421356237
 
-#define BAUDRATE				B38400
-#define MODEMDEVICE				"/dev/ttyS1"
-#define _POSIX_SOURCE			1 /* code source conforme à POSIX */
+# define BAUDRATE				B38400
+# define MODEMDEVICE			"/dev/ttyS1"
+# define _POSIX_SOURCE			1 /* code source conforme à POSIX */
 
-#define FALSE					0
-#define TRUE					1
-
-# include "../../libft/includes/libft.h"
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <sys/ioctl.h>
+# include <fcntl.h>
+# include <termios.h>
 # include <stdio.h>
+# include <stdlib.h>
+# include <limits.h>
+# include <math.h>
+# include <unistd.h>
+# include "../../libft/includes/libft.h"
 
 typedef int* 					t_ints;
+
+typedef struct					s_monte_carlo
+{
+	int							depth;
+	int							win;
+	int							loose;
+	int							neutral;
+
+	struct s_monte_carlo		*child[COLS_NB];
+}								t_monte_carlo;
 
 typedef struct					s_connect
 {
 	char						board[ROWS_NB][COLS_NB];
+	int							pile_size[COLS_NB];
+	int							last_move;
+
 	int							turn;
 	int							winner;
+	int							end;
 
-	int							player_type[2];
 	int							print;
 
-	int							last_move;
-	int							pile_size[ROWS_NB];
+	int							player_type[2];
+
+	t_monte_carlo				*tree;
+	t_monte_carlo				*actual_node;
 }								t_connect;
 
 /*
@@ -84,6 +102,7 @@ typedef struct					s_connect
 
 
 void		init(t_connect *c_four);
+int			engine(t_connect *c_four);
 
 void		print_board(t_connect *c_four);
 
@@ -95,6 +114,7 @@ int			is_diagonal_neg_win(t_connect *c_four, int player, int row, int col);
 int			is_game_won(t_connect *c_four);
 int 		get_input(t_connect *c_four);
 int			play_move(t_connect *c_four, int move);
+void		init_new_game(t_connect *c_four);
 
 
 

@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/09/27 22:06:57 by ezalos           ###   ########.fr        #
+#    Updated: 2019/09/28 02:26:11 by ezalos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -158,7 +158,7 @@ endef
 all :	$(NAME)
 
 $(NAME): $(LIB) Makefile $(A_OBJ)
-		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(A_OBJ) $(LIB) -o $(NAME))
+		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(A_OBJ) $(LIB) -o $(NAME) -lm)
 
 $(DIR_OBJ)%.o:$(SRC_PATH)/%.c $(HEAD_PATH)
 		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)

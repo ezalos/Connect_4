@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/09/27 20:48:22 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/28 02:45:28 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@ int		main(int ac, char **av)
 	(void)ac;
 	(void)av;
 	init(&c_four);
-	engine(&c_four);
+	while (1)
+		engine(&c_four);
 }
