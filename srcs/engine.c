@@ -6,7 +6,7 @@
 /*   By: ezalos <ezalos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 12:00:47 by ezalos            #+#    #+#             */
-/*   Updated: 2019/09/29 18:38:14 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/29 23:05:47 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int		play_move(t_connect *c_four, int move)
 			c_four->board[ROWS_NB - (row + 1)][col] = PLAYER_TURN(c_four);
 			c_four->turn++;
 			// print_board(c_four);
-			c_four->last_last_move = c_four->last_move;
 			c_four->last_move = col;
 
 			c_four->pile_size[col]++;
@@ -91,7 +90,7 @@ void	play(t_connect *c_four)
 		get_input(c_four);
 	else
 	{
-		move = UNSET;
+		move = is_game_winnable(c_four);
 		while (play_move(c_four, move) == FAILURE)
 		{
 			move = rand() % 7;

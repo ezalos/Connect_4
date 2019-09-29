@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/29 18:27:53 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/29 22:46:58 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef struct					s_connect
 	int							last_last_move;
 	int							last_save;
 
+	int							next_moove;
+
 	int							turn;
 	int							winner;
 	int							end;
@@ -116,6 +118,7 @@ int					is_vertical_win(t_connect *c_four, int player, int row, int col);
 int					is_diagonal_pos_win(t_connect *c_four, int player, int row, int col);
 int					is_diagonal_neg_win(t_connect *c_four, int player, int row, int col);
 int					is_game_won(t_connect *c_four);
+int					is_game_winnable(t_connect *c_four);
 
 int					play_move(t_connect *c_four, int move);
 int					engine(t_connect *c_four);

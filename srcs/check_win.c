@@ -6,7 +6,7 @@
 /*   By: ezalos <ezalos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 21:53:18 by ezalos            #+#    #+#             */
-/*   Updated: 2019/09/29 18:38:50 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/29 23:13:15 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,4 +186,29 @@ int		is_game_won(t_connect *c_four)
 		c_four->winner = player;
 	//DEBUG_INT(r_v);
 	return (r_v);
+}
+
+int		is_game_winnable(t_connect *c_four)
+{
+	int		r_v;
+	int		player;
+	int		row;
+	int		col;
+
+
+	// ft_printf("PLAYER %d\nX=%d\tO=%d\n", c_four->board[row][col], PLAYER_ONE, PLAYER_TWO);
+	// ft_printf("Row %d\tCol %d\n", row, col);
+	r_v = FAILURE;
+	col = -1;
+	while (r_v == FAILURE && ++col < COLS_NB)
+	{
+		row = ROWS_NB - (c_four->pile_size[col] + 1);
+		player = PLAYER_TURN(c_four);
+		if ((r_v = is_horizontal_win(c_four, player, row, col)) == FAILURE)
+			if ((r_v = is_vertical_win(c_four, player, row, col)) == FAILURE)
+				if ((r_v = is_diagonal_pos_win(c_four, player, row, col)) == FAILURE)
+					r_v = is_diagonal_neg_win(c_four, player, row, col);
+	}
+	//DEBUG_INT(r_v);
+	return (col);
 }
