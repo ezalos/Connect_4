@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/29 18:15:26 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/29 18:27:53 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define COMPUTER				0
 # define HUMAN					1
 
-# define CORNER					1
+# define CORNER					0
 
 # define FAILURE				0
 # define SUCCESS				1

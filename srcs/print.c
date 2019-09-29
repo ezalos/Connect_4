@@ -6,7 +6,7 @@
 /*   By: ezalos <ezalos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 12:00:51 by ezalos            #+#    #+#             */
-/*   Updated: 2019/09/28 16:14:54 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/29 18:36:50 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	print_board(t_connect *c_four)
 	{
 		if (CORNER)
 			ft_place_cursor(i++ + 4, w.ws_col - ((COLS_NB * 2) + 2));
+		else
+			ft_printf("\t");
 		if (c_four->winner == PLAYER_ONE)
 			ft_printf("%~{255;0;0} WINNER IS X%~{}\n");
 		else if (c_four->winner == PLAYER_TWO)
@@ -66,7 +68,7 @@ void	print_board(t_connect *c_four)
 		if (CORNER)
 			ft_place_cursor(i + 4, w.ws_col - ((COLS_NB * 2) + 2));
 		else
-			ft_printf("\n");
+			ft_printf("\n\t");
 		ft_printf("%~{255;0;0}%-5d%~{150;150;255}%2d %~{255;255;0}%5d\n", c_four->tree->data[1], c_four->tree->data[0], c_four->tree->data[2]);
 	}
 	if (CORNER)

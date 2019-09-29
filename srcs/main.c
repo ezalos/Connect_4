@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 12:27:19 by root              #+#    #+#             */
-/*   Updated: 2019/09/29 03:17:43 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/29 18:27:19 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ int		main(int ac, char **av)
 		}
 	while (1)
 	{
-		if (!(TOTAL_DATA(c_four.tree) % 1000000))
+		if (!(TOTAL_DATA(c_four.tree) % 1000))
 		{
 			_C_CURSOR_SAVE;
 			printf("%d\n", TOTAL_DATA(c_four.tree));
 			_C_CURSOR_LOAD;
+			c_four.player_type[0] = HUMAN;
 		}
 		engine(&c_four);
 		// c_four.player_type[0] = COMPUTER;

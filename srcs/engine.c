@@ -6,7 +6,7 @@
 /*   By: ezalos <ezalos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 12:00:47 by ezalos            #+#    #+#             */
-/*   Updated: 2019/09/29 18:12:14 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/29 18:38:14 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,15 @@ int		is_game_finished(t_connect *c_four)
 		r_v = SUCCESS;
 	else if (c_four->turn >= ROWS_NB * COLS_NB)
 		r_v = SUCCESS;
+	else
+		r_v = FAILURE;
 	if (r_v == SUCCESS)
 	{
 		c_four->end = SUCCESS;
 		c_four->turn--;
 		update_branch_data(c_four->actual_node, c_four->winner);
 	}
+	// DEBUG_INT(r_v);
 	return (r_v);
 }
 
@@ -62,6 +65,9 @@ int		play_move(t_connect *c_four, int move)
 				c_four->actual_node = c_four->actual_node->child[col];
 			// ft_printf("%~{0;255;0}%d\n", ++mv_tt);
 			_C_CURSOR_LOAD;
+			if (c_four->player_type[0] == HUMAN
+			||  c_four->player_type[1] == HUMAN)
+				print_board(c_four);
 		}
 	}
 	return (r_v);
@@ -107,16 +113,16 @@ int		engine(t_connect *c_four)
 {
 	// DEBUG_COLOR;
 	init_new_game(c_four);
-	// if (c_four->player_type[0] == HUMAN
-	// ||  c_four->player_type[1] == HUMAN)
-		// print_board(c_four);
+	if (c_four->player_type[0] == HUMAN
+	||  c_four->player_type[1] == HUMAN)
+		print_board(c_four);
 	while (is_game_finished(c_four) == FAILURE)
 	{
 		play(c_four);
-		// if (c_four->player_type[0] == HUMAN
-		// ||  c_four->player_type[1] == HUMAN)
-			// print_board(c_four);
 	}
+	if (c_four->player_type[0] == HUMAN
+	||  c_four->player_type[1] == HUMAN)
+		print_board(c_four);
 	// print_board(c_four);
 	// ft_printf("\n. %d\tX %d\t%d O\n", c_four->tree->data[0], c_four->tree->data[1], c_four->tree->data[2]);
 	return (c_four->winner);
