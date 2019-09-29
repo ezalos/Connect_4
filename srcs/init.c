@@ -6,7 +6,7 @@
 /*   By: ezalos <ezalos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 12:01:39 by ezalos            #+#    #+#             */
-/*   Updated: 2019/09/28 15:46:14 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/29 18:12:31 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void		init_new_game(t_connect *c_four)
 	c_four->turn = 0;
 	c_four->winner = PLAYER_NONE;
 	c_four->last_move = UNSET;
+	c_four->last_last_move = UNSET;
 	c_four->end = FAILURE;
 	c_four->actual_node = c_four->tree;
 }

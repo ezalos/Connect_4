@@ -6,7 +6,7 @@
 /*   By: ezalos <ezalos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 12:00:47 by ezalos            #+#    #+#             */
-/*   Updated: 2019/09/28 17:49:31 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/29 18:12:14 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int		is_game_finished(t_connect *c_four)
 
 	if (c_four->turn < 7)
 		r_v = FAILURE;
+	else if (is_game_won(c_four) == SUCCESS)
+		r_v = SUCCESS;
 	else if (c_four->turn >= ROWS_NB * COLS_NB)
 		r_v = SUCCESS;
-	else
-		r_v = is_game_won(c_four);
 	if (r_v == SUCCESS)
 	{
 		c_four->end = SUCCESS;
@@ -49,6 +49,7 @@ int		play_move(t_connect *c_four, int move)
 			c_four->board[ROWS_NB - (row + 1)][col] = PLAYER_TURN(c_four);
 			c_four->turn++;
 			// print_board(c_four);
+			c_four->last_last_move = c_four->last_move;
 			c_four->last_move = col;
 
 			c_four->pile_size[col]++;
