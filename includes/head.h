@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/28 16:13:08 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/29 18:15:26 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct					s_connect
 	char						board[ROWS_NB][COLS_NB];
 	int							pile_size[COLS_NB];
 	int							last_move;
+	int							last_last_move;
 	int							last_save;
 
 	int							turn;
