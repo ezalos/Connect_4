@@ -6,7 +6,7 @@
 /*   By: ezalos <ezalos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 12:15:02 by ezalos            #+#    #+#             */
-/*   Updated: 2019/09/28 00:18:48 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/28 17:49:41 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int 	get_input(t_connect *c_four)
 	int	r_v;
 
 	r_v = 1;
+	print_board(c_four);
 	fast_terminal(1);
 	move = UNSET;
 	buffer[1] = '\0';

@@ -6,7 +6,7 @@
 /*   By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 13:21:20 by ldevelle          #+#    #+#             */
-/*   Updated: 2019/09/28 02:45:13 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/28 16:13:08 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@
 
 # define PLAYER_TURN(c_four)	c_four->turn % 2 ? PLAYER_TWO : PLAYER_ONE
 # define PILE_HEIGHT(c_four, move)	c_four->pile_size[move]
+# define TOTAL_DATA(node)	node->data[0] +	node->data[1] +	node->data[2]
 
-# define C_EXPLO         		2.41421356237
+# define C_EXPLO         		1.41421356237
 
 # define BAUDRATE				B38400
 # define MODEMDEVICE			"/dev/ttyS1"
@@ -65,10 +66,9 @@ typedef int* 					t_ints;
 typedef struct					s_monte_carlo
 {
 	int							depth;
-	int							win;
-	int							loose;
-	int							neutral;
+	int							data[3];
 
+	struct s_monte_carlo		*daddy;
 	struct s_monte_carlo		*child[COLS_NB];
 }								t_monte_carlo;
 
@@ -77,6 +77,7 @@ typedef struct					s_connect
 	char						board[ROWS_NB][COLS_NB];
 	int							pile_size[COLS_NB];
 	int							last_move;
+	int							last_save;
 
 	int							turn;
 	int							winner;
@@ -101,21 +102,28 @@ typedef struct					s_connect
 */
 
 
-void		init(t_connect *c_four);
-int			engine(t_connect *c_four);
+void				init(t_connect *c_four);
+void				init_new_game(t_connect *c_four);
 
-void		print_board(t_connect *c_four);
+void				print_board(t_connect *c_four);
 
-int			is_valid_position(int row, int row_mod, int col, int col_mod);
-int			is_horizontal_win(t_connect *c_four, int player, int row, int col);
-int			is_vertical_win(t_connect *c_four, int player, int row, int col);
-int			is_diagonal_pos_win(t_connect *c_four, int player, int row, int col);
-int			is_diagonal_neg_win(t_connect *c_four, int player, int row, int col);
-int			is_game_won(t_connect *c_four);
-int 		get_input(t_connect *c_four);
-int			play_move(t_connect *c_four, int move);
-void		init_new_game(t_connect *c_four);
+int 				get_input(t_connect *c_four);
 
+int					is_valid_position(int row, int row_mod, int col, int col_mod);
+int					is_horizontal_win(t_connect *c_four, int player, int row, int col);
+int					is_vertical_win(t_connect *c_four, int player, int row, int col);
+int					is_diagonal_pos_win(t_connect *c_four, int player, int row, int col);
+int					is_diagonal_neg_win(t_connect *c_four, int player, int row, int col);
+int					is_game_won(t_connect *c_four);
+
+int					play_move(t_connect *c_four, int move);
+int					engine(t_connect *c_four);
+
+t_monte_carlo		*create_node(t_monte_carlo *daddy, int col, int turn);
+void				update_branch_data(t_monte_carlo *daddy, int data);
+
+void				save_tree_to_file(t_monte_carlo *tree, int fd);
+void				load_tree_from_file(t_monte_carlo *tree, t_monte_carlo *daddy, int depth, int fd);
 
 
 #endif

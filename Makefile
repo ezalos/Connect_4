@@ -6,7 +6,7 @@
 #    By: ldevelle <ldevelle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 15:04:16 by ldevelle          #+#    #+#              #
-#    Updated: 2019/09/28 02:26:11 by ezalos           ###   ########.fr        #
+#    Updated: 2019/09/29 02:57:42 by ezalos           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,8 @@ SRCS_LI		=			main\
 						engine\
 						init\
 						check_win\
+						db_tree\
+						save_tree\
 						input
 
 
@@ -158,10 +160,12 @@ endef
 all :	$(NAME)
 
 $(NAME): $(LIB) Makefile $(A_OBJ)
+		@echo $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(A_OBJ) $(LIB) -o $(NAME) -lm
 		@$(call run_and_test, $(CC) $(CFLAGS) -I./$(HEAD_DIR) $(A_OBJ) $(LIB) -o $(NAME) -lm)
 
 $(DIR_OBJ)%.o:$(SRC_PATH)/%.c $(HEAD_PATH)
 		@$(call run_and_test, $(CC) $(CFLAGS) -o $@ -c $<)
+		@echo $(CC) $(CFLAGS) -o $@ -c $<
 
 $(LIB): FORCE
 		@$(MAKE) -C $(LIB_DIR)
@@ -194,7 +198,7 @@ git :
 		@git push
 
 t	:	all
-		./$(NAME)
+		./$(NAME) $(MSG)
 
 stat :
 		@$(CC) $(CFLAGS) ./srcs/show_stats.c $(LIB) -o stats

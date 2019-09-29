@@ -6,7 +6,7 @@
 /*   By: ezalos <ezalos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 12:00:51 by ezalos            #+#    #+#             */
-/*   Updated: 2019/09/28 02:40:32 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/28 16:14:54 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,18 @@ void	print_board(t_connect *c_four)
 	if (c_four->end == SUCCESS)
 	{
 		if (CORNER)
-			ft_place_cursor(i + 4, w.ws_col - ((COLS_NB * 2) + 2));
+			ft_place_cursor(i++ + 4, w.ws_col - ((COLS_NB * 2) + 2));
 		if (c_four->winner == PLAYER_ONE)
 			ft_printf("%~{255;0;0} WINNER IS X%~{}\n");
 		else if (c_four->winner == PLAYER_TWO)
 			ft_printf("%~{255;255;0} WINNER IS O%~{}\n");
 		else if (c_four->winner == PLAYER_NONE)
 			ft_printf("%~{150;150;255}  NO WINNER%~{}\n", c_four->winner == PLAYER_ONE ? 'X' : 'O');
+		if (CORNER)
+			ft_place_cursor(i + 4, w.ws_col - ((COLS_NB * 2) + 2));
+		else
+			ft_printf("\n");
+		ft_printf("%~{255;0;0}%-5d%~{150;150;255}%2d %~{255;255;0}%5d\n", c_four->tree->data[1], c_four->tree->data[0], c_four->tree->data[2]);
 	}
 	if (CORNER)
 	{

@@ -6,7 +6,7 @@
 /*   By: ezalos <ezalos@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 12:00:47 by ezalos            #+#    #+#             */
-/*   Updated: 2019/09/28 02:52:36 by ezalos           ###   ########.fr       */
+/*   Updated: 2019/09/28 17:49:31 by ezalos           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int		is_game_finished(t_connect *c_four)
 {
-	// DEBUG_FUNC;
 	int		r_v;
 
 	if (c_four->turn < 7)
@@ -27,35 +26,41 @@ int		is_game_finished(t_connect *c_four)
 	{
 		c_four->end = SUCCESS;
 		c_four->turn--;
+		update_branch_data(c_four->actual_node, c_four->winner);
 	}
 	return (r_v);
 }
 
 int		play_move(t_connect *c_four, int move)
 {
-	// DEBUG_FUNC;
+	static	int mv_tt = 0;
 	int		row;
 	int		col;
 	int		r_v;
 
 	r_v = FAILURE;
 	col = move;
-	// ft_printf("col: (col)%d\n", col);
 	if (col >= 0 && col < COLS_NB)
 	{
+		_C_CURSOR_SAVE;
 		row = c_four->pile_size[col];
-		// ft_printf("Pile size (row): %d\n", row);
 		if (row < ROWS_NB)
 		{
-			// ft_printf("PILE (col + 1)%d\tHEIGHT (r/ow)%d\n", col + 1, row);
 			c_four->board[ROWS_NB - (row + 1)][col] = PLAYER_TURN(c_four);
 			c_four->turn++;
 			// print_board(c_four);
 			c_four->last_move = col;
 
 			c_four->pile_size[col]++;
-
-			r_v = SUCCESS;
+			if (c_four->actual_node->child[col] == NULL)
+			{
+				if (c_four->actual_node = create_node(c_four->actual_node, col, c_four->turn))
+					r_v = SUCCESS;
+			}
+			else
+				c_four->actual_node = c_four->actual_node->child[col];
+			// ft_printf("%~{0;255;0}%d\n", ++mv_tt);
+			_C_CURSOR_LOAD;
 		}
 	}
 	return (r_v);
@@ -67,29 +72,51 @@ double	UCB1(int n_dad, int n_son, int wins_son)
 {
 	if (n_son == 0)
 		return (1000000000000.0);
-	return ((double)wins_son / (2 * n_son) + C_EXPLO * (sqrt(log(n_dad) / n_son))); //n_dad should be > 0 because n_son is > 0
+	return ((double)wins_son / ((double)n_son) + C_EXPLO * (sqrt(log(n_dad) / n_son))); //n_dad should be > 0 because n_son is > 0
 }
 
 void	play(t_connect *c_four)
 {
-	// DEBUG_FUNC;
+	int		move;
+	int		son;
+
 	if (c_four->player_type[c_four->turn % 2] == HUMAN)
 		get_input(c_four);
 	else
-		while (play_move(c_four, rand() % 7) == FAILURE);
+	{
+		move = UNSET;
+		while (play_move(c_four, move) == FAILURE)
+		{
+			move = rand() % 7;
+			if (c_four->actual_node->child[move])
+				son = TOTAL_DATA(c_four->actual_node->child[move]);
+			else
+				son = 0;
+			if (UCB1(TOTAL_DATA(c_four->actual_node), son, son ? c_four->actual_node->data[(c_four->turn % 2) + 1] : 0) < 1)
+				move = UNSET;
+		}
 
+		//choose a moove from tree
+		//go there and save data
+		//
+	}
 }
 
 int		engine(t_connect *c_four)
 {
+	// DEBUG_COLOR;
 	init_new_game(c_four);
-	// print_board(c_four);
+	// if (c_four->player_type[0] == HUMAN
+	// ||  c_four->player_type[1] == HUMAN)
+		// print_board(c_four);
 	while (is_game_finished(c_four) == FAILURE)
 	{
-		// DEBUG_COLOR;
 		play(c_four);
-		// print_board(c_four);
+		// if (c_four->player_type[0] == HUMAN
+		// ||  c_four->player_type[1] == HUMAN)
+			// print_board(c_four);
 	}
-	print_board(c_four);
+	// print_board(c_four);
+	// ft_printf("\n. %d\tX %d\t%d O\n", c_four->tree->data[0], c_four->tree->data[1], c_four->tree->data[2]);
 	return (c_four->winner);
 }
